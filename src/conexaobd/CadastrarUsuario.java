@@ -14,8 +14,8 @@ import entities.Usuario;
 public class CadastrarUsuario extends ConexaoBancoDeDados {
 
     private static final String INSERT_USER = "INSERT INTO tbusuario" +
-            " (nome, email, senha, naturalidade, data_nascimento, genero) VALUES " +
-            " (?, ?, ?, ?, ?, ?);";
+            " (nome, email, senha) VALUES " +
+            " (?, ?, ?);";
 
     public void inserirUsuarioBanco(String nome, String email, String senha) throws SQLException {
         System.out.println(INSERT_USER);

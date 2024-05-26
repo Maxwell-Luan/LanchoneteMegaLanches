@@ -26,6 +26,7 @@ public class Usuario {
 
 	public Usuario() {
 		this.login = new LogarUsuario();
+		this.novoUsuario = new CadastrarUsuario();
 	}
 
 	public Usuario(String nome, String email, String senha) {
@@ -66,24 +67,24 @@ public class Usuario {
 		}
 		email = JOptionPane.showInputDialog(null, "Digite seu e-mail");
 		while (email.length() < 1 || email.isEmpty() || email.isBlank()) {
-			email = JOptionPane.showInputDialog(null, "Nome inválido! Digite novamente");
+			email = JOptionPane.showInputDialog(null, "E-mail inválido! Digite novamente");
 		}
 		senha = JOptionPane.showInputDialog(null, "Digite sua senha");
 		while (senha.length() < 1 || senha.isEmpty() || senha.isBlank()) {
-			senha = JOptionPane.showInputDialog(null, "Nome inválido! Digite novamente");
-
-			if (cbd.validarUsuarioBancoNome(nome) == true) {
-				JOptionPane.showMessageDialog(null,
-						"O nome digitado já foi escolhido por outro usuário. Por favor, defina um novo.");
-			} else if (cbd.validarUsuarioBancoEmail(email) == true) {
-				JOptionPane.showMessageDialog(null,
-						"O email digitado já está em uso. Por favor, selecione outro email.");
-			} else {
-				novoUsuario.inserirUsuarioBanco(nome, email, senha);
-				Usuario user = new Usuario(nome, email, senha);
-				usuarios.add(user);
-				JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
-			}
+			senha = JOptionPane.showInputDialog(null, "Senha inválida! Digite novamente");
+		}
+		
+		if (cbd.validarUsuarioBancoNome(nome) == true) {
+			JOptionPane.showMessageDialog(null,
+					"O nome digitado já foi escolhido por outro usuário. Por favor, defina um novo.");
+		} else if (cbd.validarUsuarioBancoEmail(email) == true) {
+			JOptionPane.showMessageDialog(null,
+					"O email digitado já está em uso. Por favor, selecione outro email.");
+		} else {
+			novoUsuario.inserirUsuarioBanco(nome, email, senha);
+			Usuario user = new Usuario(nome, email, senha);
+			usuarios.add(user);
+			JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
 		}
 	}
 

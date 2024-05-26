@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
+import entities.Funcionario;
 import entities.Usuario;
 
 public class Main {
@@ -15,18 +16,24 @@ public class Main {
 		boolean testeLogin = false;
 		String nomeX = "";
 		String senhaX = "";
+		Funcionario func = new Funcionario();
 
-		opcao = JOptionPane.showInputDialog(null, "Você já possui cadastro? \n<1> - Cadastrar \n<2> - Logar");
+		opcao = JOptionPane.showInputDialog(null,
+				"Selecione uma opção: \n<1> - Cadastrar usuário \n<2> - Logar \n<3> - Cadastrar Funcionário");
 		int opcaoX1 = Integer.parseInt(opcao);
 		switch (opcaoX1) {
 		case 1:
 			user.cadastrarUsuario();
 			break;
-		}
 
-		nomeX = JOptionPane.showInputDialog(null, "Digite seu nome");
-		senhaX = JOptionPane.showInputDialog(null, "Digite sua senha");
-		testeLogin = user.logarUsuario(nomeX, senhaX);
+		case 2:
+			nomeX = JOptionPane.showInputDialog(null, "Digite seu nome");
+			senhaX = JOptionPane.showInputDialog(null, "Digite sua senha");
+			testeLogin = user.logarUsuario(nomeX, senhaX);
+
+		case 3:
+			func.cadastrarFuncionario();
+		}
 
 	}
 }

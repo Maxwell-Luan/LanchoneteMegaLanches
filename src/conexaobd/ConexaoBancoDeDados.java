@@ -11,8 +11,9 @@ public class ConexaoBancoDeDados {
 	 public final String user = "postgres";
 	 public final String password = "22194";
 	 
-	 private static final String VALIDAR_QUERY_NOME ="SELECT * FROM tbusuario WHERE nome =?";
-	 private static final String VALIDAR_QUERY_EMAIL ="SELECT * FROM tbusuario WHERE email =?";
+	 private static final String VALIDAR_QUERY_USUARIO_NOME ="SELECT COUNT(id) FROM tbusuario WHERE nome =?";
+	 private static final String VALIDAR_QUERY_USUARIO_EMAIL ="SELECT COUNT(id) FROM tbusuario WHERE email =?";
+	 private static final String VALIDAR_QUERY_FUNCIONARIO_NOME ="SELECT COUNT(id) FROM tbfuncionario WHERE nome =?";
 	 
 	 
 	 public boolean validarUsuarioBancoNome(String nome) throws SQLException {
@@ -20,7 +21,7 @@ public class ConexaoBancoDeDados {
 
 		    try (Connection connection = DriverManager.getConnection(url, user, password);
 		    		
-		        PreparedStatement preparedStatement = connection.prepareStatement(VALIDAR_QUERY_NOME)) {
+		        PreparedStatement preparedStatement = connection.prepareStatement(VALIDAR_QUERY_USUARIO_NOME)) {
 
 		        preparedStatement.setString(1, nome);
 
@@ -44,9 +45,33 @@ public class ConexaoBancoDeDados {
 
 		    try (Connection connection = DriverManager.getConnection(url, user, password);
 		    		
-		        PreparedStatement preparedStatement = connection.prepareStatement(VALIDAR_QUERY_EMAIL)) {
+		        PreparedStatement preparedStatement = connection.prepareStatement(VALIDAR_QUERY_USUARIO_EMAIL)) {
 
 		        preparedStatement.setString(1, email);
+
+		        ResultSet resultSet = preparedStatement.executeQuery();
+		        
+		        System.out.println(preparedStatement);
+
+		        // Se houver algum resultado na consulta, significa que o usuário foi encontrado
+		        if (resultSet.next() && resultSet.getInt("count") > 0) {
+		            encontrado = true;
+		        }
+		    } catch (SQLException e) {
+		        printSQLException(e);
+		    }
+
+		    return encontrado;
+		}
+	 
+	 public boolean validarFuncionarioNome(String nome) throws SQLException {
+		    boolean encontrado = false;
+
+		    try (Connection connection = DriverManager.getConnection(url, user, password);
+		    		
+		        PreparedStatement preparedStatement = connection.prepareStatement(VALIDAR_QUERY_FUNCIONARIO_NOME)) {
+
+		        preparedStatement.setString(1, nome);
 
 		        ResultSet resultSet = preparedStatement.executeQuery();
 		        
