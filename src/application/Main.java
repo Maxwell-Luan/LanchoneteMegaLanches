@@ -18,21 +18,22 @@ public class Main {
 		String senhaX = "";
 		Funcionario func = new Funcionario();
 
-		opcao = JOptionPane.showInputDialog(null,
-				"Selecione uma opção: \n<1> - Cadastrar usuário \n<2> - Logar \n<3> - Cadastrar Funcionário");
+		opcao = JOptionPane.showInputDialog(null, "Selecione uma opção: \n<1> - Cadastrar usuário " + "\n<2> - Logar "
+				+ "\n<3> - Cadastrar Funcionário " + "\n<4> - Listar Funcionários");
 		int opcaoX1 = Integer.parseInt(opcao);
+
 		switch (opcaoX1) {
 		case 1:
 			user.cadastrarUsuario();
 			break;
-
 		case 2:
-			nomeX = JOptionPane.showInputDialog(null, "Digite seu nome");
-			senhaX = JOptionPane.showInputDialog(null, "Digite sua senha");
-			testeLogin = user.logarUsuario(nomeX, senhaX);
-
+			user.logarUsuario();
+			break;
 		case 3:
 			func.cadastrarFuncionario();
+			break;
+		case 4:
+			func.listarFuncionarios();
 		}
 
 	}

@@ -73,13 +73,12 @@ public class Usuario {
 		while (senha.length() < 1 || senha.isEmpty() || senha.isBlank()) {
 			senha = JOptionPane.showInputDialog(null, "Senha inválida! Digite novamente");
 		}
-		
+
 		if (cbd.validarUsuarioBancoNome(nome) == true) {
 			JOptionPane.showMessageDialog(null,
 					"O nome digitado já foi escolhido por outro usuário. Por favor, defina um novo.");
 		} else if (cbd.validarUsuarioBancoEmail(email) == true) {
-			JOptionPane.showMessageDialog(null,
-					"O email digitado já está em uso. Por favor, selecione outro email.");
+			JOptionPane.showMessageDialog(null, "O email digitado já está em uso. Por favor, selecione outro email.");
 		} else {
 			novoUsuario.inserirUsuarioBanco(nome, email, senha);
 			Usuario user = new Usuario(nome, email, senha);
@@ -88,20 +87,21 @@ public class Usuario {
 		}
 	}
 
-	//Permitir login do usuário no sistema.
-	public boolean logarUsuario(String nomeX, String senhaX) throws SQLException {
+	// Permitir login do usuário no sistema.
+	public boolean logarUsuario() throws SQLException {
+		nome = JOptionPane.showInputDialog(null, "Digite seu nome");
+		senha = JOptionPane.showInputDialog(null, "Digite sua senha");
 
-			boolean encontradoBanco = login.verificarUsuarioBanco(nomeX, senhaX);
+		boolean encontradoBanco = login.verificarUsuarioBanco(nome, senha);
 
-			if (encontradoBanco) {
-				JOptionPane.showMessageDialog(null, "Bem vindo a Mega Lanches!");
-				return true;
-			} else {
-				JOptionPane.showMessageDialog(null, "Acesso negado! Usuário ou senha inválidos.");
-				return false;
-			}
-		
+		if (encontradoBanco) {
+			JOptionPane.showMessageDialog(null, "Bem vindo a Mega Lanches!");
+			return true;
+		} else {
+			JOptionPane.showMessageDialog(null, "Acesso negado! Usuário ou senha inválidos.");
+			return false;
 		}
 
 	}
 
+}

@@ -7,12 +7,14 @@ import javax.swing.JOptionPane;
 
 import conexaobd.CadastrarFuncionario;
 import conexaobd.ConexaoBancoDeDados;
+import conexaobd.ListarFuncionario;
 
 public class Funcionario {
 
 	private String nome;
 	private double saldo;
 	private CadastrarFuncionario inserirFuncionario = null;	
+	private ListarFuncionario lf = new ListarFuncionario();
 	private ConexaoBancoDeDados cbd = new ConexaoBancoDeDados();
 
 	ArrayList<Funcionario> funcionarios = new ArrayList<>();
@@ -63,6 +65,10 @@ public class Funcionario {
 			funcionarios.add(func);
 			JOptionPane.showMessageDialog(null, "Funcionário cadastrado com sucesso!");
 		}
+	}
+	
+	public void listarFuncionarios() throws SQLException {
+			lf.listarFuncionarios();
 	}
 
 }
