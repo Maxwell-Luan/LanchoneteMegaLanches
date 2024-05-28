@@ -12,17 +12,14 @@ public class Main {
 	public static void main(String[] args) throws SQLException {
 
 		Usuario user = new Usuario();
-		String opcao = "";
-		boolean testeLogin = false;
-		String nomeX = "";
-		String senhaX = "";
 		Funcionario func = new Funcionario();
 
-		opcao = JOptionPane.showInputDialog(null, "Selecione uma opção: \n<1> - Cadastrar usuário " + "\n<2> - Logar "
-				+ "\n<3> - Cadastrar Funcionário " + "\n<4> - Listar Funcionários");
-		int opcaoX1 = Integer.parseInt(opcao);
+		String opcao = JOptionPane.showInputDialog(null,
+				"Selecione uma opção: \n<1> - Cadastrar usuário " + "\n<2> - Logar " + "\n<3> - Cadastrar Funcionário "
+						+ "\n<4> - Listar Funcionários \n<5> - Alterar Usuário");
+		int opcaoX = Integer.parseInt(opcao);
 
-		switch (opcaoX1) {
+		switch (opcaoX) {
 		case 1:
 			user.cadastrarUsuario();
 			break;
@@ -34,6 +31,8 @@ public class Main {
 			break;
 		case 4:
 			func.listarFuncionarios();
+		case 5:
+			user.alterarUsuario();
 		}
 
 	}

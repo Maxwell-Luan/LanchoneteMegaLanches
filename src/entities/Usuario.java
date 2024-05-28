@@ -1,32 +1,22 @@
 package entities;
 
+import java.awt.HeadlessException;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-
 import javax.swing.JOptionPane;
-
-import conexaobd.CadastrarUsuario;
-import conexaobd.ConexaoBancoDeDados;
-import conexaobd.LogarUsuario;
-import entities.Usuario;
+import conexaobd.UsuarioBancoOperacoes;
 
 public class Usuario {
 
 	private String nome;
 	private String email;
 	private String senha;
-	private ConexaoBancoDeDados cbd = new ConexaoBancoDeDados();
-	private CadastrarUsuario novoUsuario = null;
-	private LogarUsuario login = null;
+	private UsuarioBancoOperacoes userBD = null;
 
 	ArrayList<Usuario> usuarios = new ArrayList<>();
 
 	public Usuario() {
-		this.login = new LogarUsuario();
-		this.novoUsuario = new CadastrarUsuario();
+		this.userBD = new UsuarioBancoOperacoes();
 	}
 
 	public Usuario(String nome, String email, String senha) {
@@ -58,50 +48,60 @@ public class Usuario {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+	
+	// Permitir login do usuário no sistema.
+		public boolean logarUsuario() throws SQLException {
+			String nome = JOptionPane.showInputDialog(null, "Digite seu nome");
+			String senha = JOptionPane.showInputDialog(null, "Digite sua senha");
+
+			boolean encontradoBanco = userBD.validarLoginUsuarioBanco(nome, senha);
+
+			if (encontradoBanco) {
+				JOptionPane.showMessageDialog(null, "Bem vindo a Mega Lanches!");
+				return true;
+			} else {
+				JOptionPane.showMessageDialog(null, "Acesso negado! Usuário ou senha inválidos.");
+				return false;
+			}
+
+		}
 
 	// Realizar o cadastro de um usuario.
 	public void cadastrarUsuario() throws SQLException {
-		nome = JOptionPane.showInputDialog(null, "Digite seu nome");
+		String nome = JOptionPane.showInputDialog(null, "Digite seu nome");
 		while (nome.length() < 1 || nome.isEmpty() || nome.isBlank()) {
 			nome = JOptionPane.showInputDialog(null, "Nome inválido! Digite novamente");
 		}
-		email = JOptionPane.showInputDialog(null, "Digite seu e-mail");
+		String email = JOptionPane.showInputDialog(null, "Digite seu e-mail");
 		while (email.length() < 1 || email.isEmpty() || email.isBlank()) {
 			email = JOptionPane.showInputDialog(null, "E-mail inválido! Digite novamente");
 		}
-		senha = JOptionPane.showInputDialog(null, "Digite sua senha");
+		String senha = JOptionPane.showInputDialog(null, "Digite sua senha");
 		while (senha.length() < 1 || senha.isEmpty() || senha.isBlank()) {
 			senha = JOptionPane.showInputDialog(null, "Senha inválida! Digite novamente");
 		}
 
-		if (cbd.validarUsuarioBancoNome(nome) == true) {
+		if (userBD.validarUsuarioBancoNome(nome) == true) {
 			JOptionPane.showMessageDialog(null,
 					"O nome digitado já foi escolhido por outro usuário. Por favor, defina um novo.");
-		} else if (cbd.validarUsuarioBancoEmail(email) == true) {
+		} else if (userBD.validarUsuarioBancoEmail(email) == true) {
 			JOptionPane.showMessageDialog(null, "O email digitado já está em uso. Por favor, selecione outro email.");
 		} else {
-			novoUsuario.inserirUsuarioBanco(nome, email, senha);
-			Usuario user = new Usuario(nome, email, senha);
-			usuarios.add(user);
+			userBD.inserirUsuarioBanco(nome, email, senha);
 			JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
 		}
 	}
-
-	// Permitir login do usuário no sistema.
-	public boolean logarUsuario() throws SQLException {
-		nome = JOptionPane.showInputDialog(null, "Digite seu nome");
-		senha = JOptionPane.showInputDialog(null, "Digite sua senha");
-
-		boolean encontradoBanco = login.verificarUsuarioBanco(nome, senha);
-
-		if (encontradoBanco) {
-			JOptionPane.showMessageDialog(null, "Bem vindo a Mega Lanches!");
-			return true;
-		} else {
-			JOptionPane.showMessageDialog(null, "Acesso negado! Usuário ou senha inválidos.");
-			return false;
+	
+	public void alterarUsuario() throws HeadlessException, SQLException {
+		String nome = JOptionPane.showInputDialog(null, "Qual usuário deseja alterar o nome?");
+		if (userBD.validarUsuarioBancoNome(nome) == false) {
+			JOptionPane.showMessageDialog(null,
+					"Usuário não encontrado!");
 		}
-
+		else {
+			String novoNome = JOptionPane.showInputDialog(null, "Altere o nome: ");
+			userBD.alterarUsuarioBanco(nome, novoNome);
+		}
 	}
 
 }

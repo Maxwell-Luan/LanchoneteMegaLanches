@@ -2,25 +2,19 @@ package entities;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
-
-import conexaobd.CadastrarFuncionario;
-import conexaobd.ConexaoBancoDeDados;
-import conexaobd.ListarFuncionario;
+import conexaobd.FuncionarioBancoOperacoes;
 
 public class Funcionario {
 
 	private String nome;
 	private double saldo;
-	private CadastrarFuncionario inserirFuncionario = null;	
-	private ListarFuncionario lf = new ListarFuncionario();
-	private ConexaoBancoDeDados cbd = new ConexaoBancoDeDados();
+	private FuncionarioBancoOperacoes funcBD = null;	
 
 	ArrayList<Funcionario> funcionarios = new ArrayList<>();
 	
 	public Funcionario() {
-		this.inserirFuncionario = new CadastrarFuncionario();
+		this.funcBD = new FuncionarioBancoOperacoes();
 	}
 
 	public Funcionario(String nome, double saldo) {
@@ -46,7 +40,8 @@ public class Funcionario {
 
 	// Cadastrar funcionário e verificar se saldo é válido.
 	public void cadastrarFuncionario() throws SQLException {
-		nome = JOptionPane.showInputDialog(null, "Digite o nome do funcionário");
+		double saldo = 0.00;
+		String nome = JOptionPane.showInputDialog(null, "Digite o nome do funcionário");
 		while (nome.length() < 1 || nome.isEmpty() || nome.isBlank()) {
 			nome = JOptionPane.showInputDialog(null, "Nome inválido! Digite novamente");
 		}
@@ -57,10 +52,10 @@ public class Funcionario {
 			JOptionPane.showMessageDialog(null, "Saldo inválido! Digite um número válido.");
 		}
 
-		if (cbd.validarFuncionarioNome(nome) == true) {
+		if (funcBD.validarFuncionarioNome(nome) == true) {
 			JOptionPane.showMessageDialog(null, "Já existe um usuário com este nome!");
 		} else {
-			inserirFuncionario.inserirFuncionarioBanco(nome, saldo);
+			funcBD.inserirFuncionarioBanco(nome, saldo);
 			Funcionario func = new Funcionario(nome, saldo);
 			funcionarios.add(func);
 			JOptionPane.showMessageDialog(null, "Funcionário cadastrado com sucesso!");
@@ -68,7 +63,7 @@ public class Funcionario {
 	}
 	
 	public void listarFuncionarios() throws SQLException {
-			lf.listarFuncionarios();
+			funcBD.listarFuncionarios();
 	}
 
 }
