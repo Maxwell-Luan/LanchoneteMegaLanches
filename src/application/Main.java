@@ -16,7 +16,8 @@ public class Main {
 
 		String opcao = JOptionPane.showInputDialog(null,
 				"Selecione uma opção: \n<1> - Cadastrar usuário " + "\n<2> - Logar " + "\n<3> - Cadastrar Funcionário "
-						+ "\n<4> - Listar Funcionários \n<5> - Alterar Usuário");
+						+ "\n<4> - Listar Funcionários \n<5> - Alterar Usuário \n<6> - Adicionar Saldo "
+						+ "\n<7> Reduzir saldo ");
 		int opcaoX = Integer.parseInt(opcao);
 
 		switch (opcaoX) {
@@ -31,8 +32,16 @@ public class Main {
 			break;
 		case 4:
 			func.listarFuncionarios();
+			break;
 		case 5:
 			user.alterarUsuario();
+			break;
+		case 6:
+			func.atribuirSaldo();
+			break;
+		case 7:
+			func.reduzirSaldo();
+			break;
 		}
 
 	}
