@@ -98,10 +98,10 @@ public class Usuario {
             senha = JOptionPane.showInputDialog(null, "Senha inválida! Digite novamente");
         }
 
-        if (userBD.validarUsuarioBancoNome(nome) == true) {
+        if (userBD.validarUsuarioBancoNome(nome)) {
             JOptionPane.showMessageDialog(null,
                     "O nome digitado já foi escolhido por outro usuário. Por favor, defina um novo.");
-        } else if (userBD.validarUsuarioBancoEmail(email) == true) {
+        } else if (userBD.validarUsuarioBancoEmail(email)) {
             JOptionPane.showMessageDialog(null, "O email digitado já está em uso. Por favor, selecione outro email.");
         } else {
             userBD.inserirUsuarioBanco(nome, email, senha);
