@@ -12,7 +12,7 @@ public class Produto {
 	private String descricao;
 	private double valor;
 	private ProdutoBancoOperacoes produtoBD = null;
-	
+
 	public Produto() {
 		this.produtoBD = new ProdutoBancoOperacoes();
 	}
@@ -47,26 +47,44 @@ public class Produto {
 		this.valor = valor;
 	}
 
+	public void listarProdutos() throws SQLException {
+		produtoBD.listarProdutos();
+	}
+
 	public void cadastrarProduto() throws SQLException {
 		String descricao = JOptionPane.showInputDialog(null, "Digite o nome do produto");
 		while (descricao.length() < 1 || descricao.isEmpty() || descricao.isBlank()) {
 			descricao = JOptionPane.showInputDialog(null, "Nome inválido! Digite novamente");
 		}
 		if (produtoBD.validarProdutoNome(descricao)) {
-			JOptionPane.showMessageDialog(null,
-					"Já existe um produto com esse nome! Digite um novo.");
-		}
-		else {
+			JOptionPane.showMessageDialog(null, "Já existe um produto com esse nome! Digite um novo.");
+		} else {
 			String valorX = JOptionPane.showInputDialog(null, "Digite o valor do produto");
 			try {
-                valor = Double.parseDouble(valorX);
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Valor inválido! Digite um número válido.");
-                return;
-            }
+				valor = Double.parseDouble(valorX);
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Valor inválido! Digite um número válido.");
+				return;
+			}
 			produtoBD.inserirProdutoBanco(descricao, valor);
 			JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
-			
+		}
+	}
+
+	public void alterarProduto() throws SQLException {
+		String nome = JOptionPane.showInputDialog(null, "Qual produto deseja alterar?");
+		if (produtoBD.validarProdutoNome(nome)) {
+			String valorX = JOptionPane.showInputDialog(null, "Digite o novo valor: ");
+			try {
+				valor = Double.parseDouble(valorX);
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Valor inválido! Digite um número válido.");
+				return;
+			}
+			produtoBD.alterarProdutoBanco(valor, nome);
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Produto não localizado.");
 		}
 	}
 

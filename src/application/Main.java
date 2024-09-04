@@ -10,17 +10,17 @@ import entities.Usuario;
 
 public class Main {
 
-	//Classe utilizada apenas para testar os métodos a medida que são criados
+	// Classe utilizada apenas para testar os métodos a medida que são criados
 	public static void main(String[] args) throws SQLException {
 
 		Usuario user = new Usuario();
 		Funcionario func = new Funcionario();
 		Produto prod = new Produto();
 
-		String opcao = JOptionPane.showInputDialog(null,
-				"Selecione uma opção: \n<1> - Cadastrar usuário " + "\n<2> - Logar " + "\n<3> - Cadastrar Funcionário "
-						+ "\n<4> - Listar Funcionários \n<5> - Alterar Usuário \n<6> - Adicionar Saldo "
-						+ "\n<7> Reduzir saldo \n<8> Cadastrar Produto");
+		String opcao = JOptionPane.showInputDialog(null, "Selecione uma opção: \n<1> - Cadastrar usuário "
+				+ "\n<2> - Logar " + "\n<3> - Cadastrar Funcionário "
+				+ "\n<4> - Listar Funcionários \n<5> - Alterar Usuário \n<6> - Adicionar Saldo "
+				+ "\n<7> - Reduzir saldo \n<8> - Cadastrar Produto \n<9> - Listar Produtos \n<10> - Alterar Produto");
 		int opcaoX = Integer.parseInt(opcao);
 
 		switch (opcaoX) {
@@ -45,8 +45,14 @@ public class Main {
 		case 7:
 			func.reduzirSaldo();
 			break;
-		case 8: 
+		case 8:
 			prod.cadastrarProduto();
+			break;
+		case 9:
+			prod.listarProdutos();
+			break;
+		case 10:
+			prod.alterarProduto();
 			break;
 		}
 
