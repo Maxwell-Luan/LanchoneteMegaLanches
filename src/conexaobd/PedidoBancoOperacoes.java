@@ -47,13 +47,13 @@ public class PedidoBancoOperacoes extends ConexaoBancoDeDados {
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
+				String funcionario = resultSet.getString("funcionario");
 				String descricao = resultSet.getString("descricao");
 				double valor = resultSet.getDouble("valor");
 				LocalDate data = resultSet.getDate("data").toLocalDate(); // Converte java.sql.Date para LocalDate
 				LocalTime hora = resultSet.getTime("hora").toLocalTime(); // Converte java.sql.Time para LocalTime
-				String nomeFuncionario = resultSet.getString("nome_funcionario"); // Pega o nome do funcionário
 
-				pedidos.add(descricao + " - " + valor + " - " + data + " - " + hora + " - " + nomeFuncionario);
+				pedidos.add(funcionario + " - " + descricao + " - " + valor + " - " + data + " - " + hora + " - ");
 			}
 
 			StringBuilder pedidosText = new StringBuilder();
