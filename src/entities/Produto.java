@@ -82,8 +82,7 @@ public class Produto {
 				return;
 			}
 			produtoBD.alterarProdutoBanco(valor, nome);
-		}
-		else {
+		} else {
 			JOptionPane.showMessageDialog(null, "Produto não localizado.");
 		}
 	}

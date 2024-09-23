@@ -7,139 +7,141 @@ import conexaobd.FuncionarioBancoOperacoes;
 
 public class Funcionario {
 
-    private int id;
-    private String nome;
-    private double saldo;
-    private FuncionarioBancoOperacoes funcBD = null;
+	private int id;
+	private String nome;
+	private double saldo;
+	private FuncionarioBancoOperacoes funcBD = null;
 
-    ArrayList<Funcionario> funcionarios = new ArrayList<>();
+	ArrayList<Funcionario> funcionarios = new ArrayList<>();
 
-    public Funcionario() {
-        this.funcBD = new FuncionarioBancoOperacoes();
-    }
+	public Funcionario() {
+		this.funcBD = new FuncionarioBancoOperacoes();
+	}
 
-    public Funcionario(int id, String nome, double saldo) {
-        this.id = id;
-        this.nome = nome;
-        this.saldo = saldo;
-        this.funcBD = new FuncionarioBancoOperacoes();
-    }
+	public Funcionario(int id, String nome, double saldo) {
+		this.id = id;
+		this.nome = nome;
+		this.saldo = saldo;
+		this.funcBD = new FuncionarioBancoOperacoes();
+	}
 
-    public Funcionario(String nome, double saldo) {
-        this.nome = nome;
-        this.saldo = saldo;
-        this.funcBD = new FuncionarioBancoOperacoes();
-    }
+	public Funcionario(String nome, double saldo) {
+		this.nome = nome;
+		this.saldo = saldo;
+		this.funcBD = new FuncionarioBancoOperacoes();
+	}
 
-    // Getter e Setter para id
-    public int getId() {
-        return id;
-    }
+	// Getter e Setter para id
+	public int getId() {
+		return id;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public double getSaldo() {
-        return saldo;
-    }
+	public double getSaldo() {
+		return saldo;
+	}
 
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
-    }
+	public void setSaldo(double saldo) {
+		this.saldo = saldo;
+	}
 
-    // Método para atribuir saldo ao funcionário
-    public void atribuirSaldo() throws SQLException {
-        double valor = 0.00;
-        String nomeFuncionario = JOptionPane.showInputDialog(null, "Digite o nome do funcionário que receberá mais saldo:");
+	// Método para atribuir saldo ao funcionário
+	public void atribuirSaldo() throws SQLException {
+		double valor = 0.00;
+		String nomeFuncionario = JOptionPane.showInputDialog(null,
+				"Digite o nome do funcionário que receberá mais saldo:");
 
-        if (funcBD.validarFuncionarioNome(nomeFuncionario)) {
-            double saldoAtual = funcBD.getSaldoFuncionario(nomeFuncionario);  // Obter o saldo atual do funcionário
+		if (funcBD.validarFuncionarioNome(nomeFuncionario)) {
+			double saldoAtual = funcBD.getSaldoFuncionario(nomeFuncionario); // Obter o saldo atual do funcionário
 
-            String valorX = JOptionPane.showInputDialog(null, "Digite quanto quer acrescentar:");
+			String valorX = JOptionPane.showInputDialog(null, "Digite quanto quer acrescentar:");
 
-            try {
-                valor = Double.parseDouble(valorX);
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Valor inválido! Digite um número válido.");
-                return;  // Retorna após erro de entrada para evitar execução adicional
-            }
+			try {
+				valor = Double.parseDouble(valorX);
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Valor inválido! Digite um número válido.");
+				return; // Retorna após erro de entrada para evitar execução adicional
+			}
 
-            if (valor > 0) {
-                saldoAtual += valor;  // Adiciona o valor ao saldo atual
-                funcBD.atualizarSaldoFuncionario(nomeFuncionario, saldoAtual);  // Atualiza o saldo no banco de dados
-                JOptionPane.showMessageDialog(null, "Valor adicionado com sucesso!");
-            } else {
-                JOptionPane.showMessageDialog(null, "Valor inválido para adicionar saldo!");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Funcionário não encontrado!");
-        }
-    }
+			if (valor > 0) {
+				saldoAtual += valor; // Adiciona o valor ao saldo atual
+				funcBD.atualizarSaldoFuncionario(nomeFuncionario, saldoAtual); // Atualiza o saldo no banco de dados
+				JOptionPane.showMessageDialog(null, "Valor adicionado com sucesso!");
+			} else {
+				JOptionPane.showMessageDialog(null, "Valor inválido para adicionar saldo!");
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Funcionário não encontrado!");
+		}
+	}
 
-    // Método para reduzir o saldo do funcionário
-    public void reduzirSaldo() throws SQLException {
-        double valor = 0.00;
-        String nomeFuncionario = JOptionPane.showInputDialog(null, "Digite o nome do funcionário que deseja deduzir o saldo:");
+	// Método para reduzir o saldo do funcionário
+	public void reduzirSaldo() throws SQLException {
+		double valor = 0.00;
+		String nomeFuncionario = JOptionPane.showInputDialog(null,
+				"Digite o nome do funcionário que deseja deduzir o saldo:");
 
-        if (funcBD.validarFuncionarioNome(nomeFuncionario)) {
-            double saldoAtual = funcBD.getSaldoFuncionario(nomeFuncionario);  // Obter o saldo atual do funcionário
+		if (funcBD.validarFuncionarioNome(nomeFuncionario)) {
+			double saldoAtual = funcBD.getSaldoFuncionario(nomeFuncionario); // Obter o saldo atual do funcionário
 
-            String valorX = JOptionPane.showInputDialog(null, "Digite quanto quer deduzir:");
+			String valorX = JOptionPane.showInputDialog(null, "Digite quanto quer deduzir:");
 
-            try {
-                valor = Double.parseDouble(valorX);
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Valor inválido! Digite um número válido.");
-                return;  // Retorna após erro de entrada para evitar execução adicional
-            }
+			try {
+				valor = Double.parseDouble(valorX);
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Valor inválido! Digite um número válido.");
+				return; // Retorna após erro de entrada para evitar execução adicional
+			}
 
-            if (valor > 0) {
-                saldoAtual -= valor;  // Deduz o valor do saldo atual
-                funcBD.atualizarSaldoFuncionario(nomeFuncionario, saldoAtual);  // Atualiza o saldo no banco de dados
-                JOptionPane.showMessageDialog(null, "Valor deduzido com sucesso!");
-            } else {
-                JOptionPane.showMessageDialog(null, "Valor inválido para deduzir saldo!");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Funcionário não encontrado!");
-        }
-    }
+			if (valor > 0) {
+				saldoAtual -= valor; // Deduz o valor do saldo atual
+				funcBD.atualizarSaldoFuncionario(nomeFuncionario, saldoAtual); // Atualiza o saldo no banco de dados
+				JOptionPane.showMessageDialog(null, "Valor deduzido com sucesso!");
+			} else {
+				JOptionPane.showMessageDialog(null, "Valor inválido para deduzir saldo!");
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Funcionário não encontrado!");
+		}
+	}
 
-    // Cadastrar funcionário e verificar se saldo é válido.
-    public void cadastrarFuncionario() throws SQLException {
-        double saldo = 0.00;
-        String nome = JOptionPane.showInputDialog(null, "Digite o nome do funcionário");
-        while (nome.length() < 1 || nome.isEmpty() || nome.isBlank()) {
-            nome = JOptionPane.showInputDialog(null, "Nome inválido! Digite novamente");
-        }
-        String saldoX = JOptionPane.showInputDialog(null, "Digite o saldo do funcionário");
-        try {
-            saldo = Double.parseDouble(saldoX);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Saldo inválido! Digite um número válido.");
-        }
+	// Cadastrar funcionário e verificar se saldo é válido.
+	public void cadastrarFuncionario() throws SQLException {
+		double saldo = 0.00;
+		String nome = JOptionPane.showInputDialog(null, "Digite o nome do funcionário");
+		while (nome.length() < 1 || nome.isEmpty() || nome.isBlank()) {
+			nome = JOptionPane.showInputDialog(null, "Nome inválido! Digite novamente");
+		}
+		String saldoX = JOptionPane.showInputDialog(null, "Digite o saldo do funcionário");
+		try {
+			saldo = Double.parseDouble(saldoX);
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(null, "Saldo inválido! Digite um número válido.");
+		}
 
-        if (funcBD.validarFuncionarioNome(nome)) {
-            JOptionPane.showMessageDialog(null, "Já existe um funcionário com este nome!");
-        } else {
-            funcBD.inserirFuncionarioBanco(nome, saldo);
-            Funcionario func = new Funcionario(nome, saldo);
-            funcionarios.add(func);
-            JOptionPane.showMessageDialog(null, "Funcionário cadastrado com sucesso!");
-        }
-    }
+		if (funcBD.validarFuncionarioNome(nome)) {
+			JOptionPane.showMessageDialog(null, "Já existe um funcionário com este nome!");
+		} else {
+			funcBD.inserirFuncionarioBanco(nome, saldo);
+			Funcionario func = new Funcionario(nome, saldo);
+			funcionarios.add(func);
+			JOptionPane.showMessageDialog(null, "Funcionário cadastrado com sucesso!");
+		}
+	}
 
-    public void listarFuncionarios() throws SQLException {
-        funcBD.listarFuncionarios();
-    }
+	public void listarFuncionarios() throws SQLException {
+		funcBD.listarFuncionarios();
+	}
 
 }
